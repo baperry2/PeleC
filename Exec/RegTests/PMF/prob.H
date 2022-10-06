@@ -156,6 +156,26 @@ pc_initdata(
     const amrex::Real z = prob_lo[2] + (k + 0.5) * dx[2];
     amrex::GpuArray<amrex::Real, NUM_SPECIES + 4> pmf_vals = {{0.0}};
     amrex::Real pert = 0.0;
+#if AMREX_SPACEDIM < 2
+    amrex::Abort("PMF must have at least two dimensions");
+#elif AMREX_SPACEDIM < 3
+    if (prob_parm.pertmag > 0.0) {
+      pert =
+        prob_parm.pertmag *
+        (1.0 * std::sin(2 * constants::PI() * 4 * x / prob_parm.L[0]) +
+         1.023 *
+           std::sin(2 * constants::PI() * 2 * (x - 0.4598) / prob_parm.L[0]) +
+         0.945 *
+           std::sin(2 * constants::PI() * 3 * (x - 0.712435) / prob_parm.L[0]) +
+         1.017 *
+           std::sin(2 * constants::PI() * 5 * (x - 0.33) / prob_parm.L[0]) +
+         0.982 *
+           std::sin(2 * constants::PI() * 5 * (x - 1.4234) / prob_parm.L[0]));
+    }
+    
+    const amrex::Real z1 = (y - prob_parm.standoff - 0.5 * dx[1] + pert);
+    const amrex::Real z2 = (y - prob_parm.standoff + 0.5 * dx[1] + pert);
+#else
     if (prob_parm.pertmag > 0.0) {
       pert =
         prob_parm.pertmag *
@@ -173,8 +193,10 @@ pc_initdata(
          0.982 *
            std::sin(2 * constants::PI() * 5 * (x - 1.4234) / prob_parm.L[0]));
     }
+    
     const amrex::Real z1 = (z - prob_parm.standoff - 0.5 * dx[1] + pert);
     const amrex::Real z2 = (z - prob_parm.standoff + 0.5 * dx[1] + pert);
+#endif
     pmf(z1, z2, pmf_vals, prob_parm);
     amrex::Real molefrac[NUM_SPECIES] = {0.0};
     for (int n = 0; n < NUM_SPECIES; n++) {
@@ -192,8 +214,13 @@ pc_initdata(
     eos.PYT2RE(pres, massfrac, T, rho, energy);
     state(i, j, k, URHO) = rho;
     state(i, j, k, UMX) = rho * u[0];
-    state(i, j, k, UMY) = rho * u[1];
+#if AMREX_SPACEDIM == 2
+    state(i, j, k, UMY) = 0.02331; //rho * u[1];
     state(i, j, k, UMZ) = rho * u[2];
+#else 
+    state(i, j, k, UMY) = rho * u[1]; //rho * u[1];
+    state(i, j, k, UMZ) = 0.02331;
+#endif
     state(i, j, k, UEINT) = rho * energy;
     state(i, j, k, UEDEN) =
       rho * (energy + 0.5 * (u[0] * u[0] + u[1] * u[1] + u[2] * u[2]));
