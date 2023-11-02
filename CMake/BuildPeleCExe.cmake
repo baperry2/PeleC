@@ -5,7 +5,7 @@ function(build_pelec_exe pelec_exe_name pelec_lib_name)
   add_executable(${pelec_exe_name} "")
 
   if(CLANG_TIDY_EXE)
-    set_target_properties(${pelec_exe_name} PROPERTIES CXX_CLANG_TIDY 
+    set_target_properties(${pelec_exe_name} PROPERTIES CXX_CLANG_TIDY
                           "${CLANG_TIDY_EXE};--config-file=${CMAKE_SOURCE_DIR}/.clang-tidy")
   endif()
 
@@ -15,12 +15,20 @@ function(build_pelec_exe pelec_exe_name pelec_lib_name)
        prob.H
        prob.cpp
   )
-  
+
   #PeleC include directories
   target_include_directories(${pelec_exe_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
   target_include_directories(${pelec_exe_name} PRIVATE ${SRC_DIR})
   target_include_directories(${pelec_exe_name} PRIVATE ${CMAKE_BINARY_DIR})
   target_include_directories(${pelec_exe_name} PRIVATE ${CMAKE_SOURCE_DIR}/Source/Params/param_includes)
+
+  #Adv and Aux Variables
+  if (PELEC_NUM_ADV GREATER 0)
+    target_compile_definitions(${pelec_exe_name} PRIVATE NUM_ADV=${PELEC_NUM_ADV})
+  endif()
+  if (PELEC_NUM_AUX GREATER 0)
+    target_compile_definitions(${pelec_exe_name} PRIVATE NUM_AUX=${PELEC_NUM_AUX})
+  endif()
 
   # Set PeleMP flags
   set(PELEMP_SRC_DIR ${CMAKE_SOURCE_DIR}/Submodules/PeleMP/Source)
@@ -158,10 +166,10 @@ function(build_pelec_exe pelec_exe_name pelec_lib_name)
     set_target_properties(${pelec_exe_name} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     target_compile_options(${pelec_exe_name} PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-Xptxas --disable-optimizer-constants>)
   endif()
- 
+
   target_link_libraries(${pelec_exe_name} PRIVATE ${pelec_lib_name} AMReX::amrex)
 
-  #Define what we want to be installed during a make install 
+  #Define what we want to be installed during a make install
   install(TARGETS ${pelec_exe_name}
           RUNTIME DESTINATION bin
           ARCHIVE DESTINATION lib
