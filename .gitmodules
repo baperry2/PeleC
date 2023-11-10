@@ -1,9 +1,11 @@
 [submodule "Submodules/AMReX"]
 	path = Submodules/AMReX
 	url = https://github.com/AMReX-Codes/amrex.git
+        depth = 1
 [submodule "Submodules/PelePhysics"]
 	path = Submodules/PelePhysics
 	url = https://github.com/AMReX-Combustion/PelePhysics.git
+        depth = 1
 [submodule "Submodules/PeleMP"]
 	path = Submodules/PeleMP
 	url = https://github.com/AMReX-Combustion/PeleMP.git
@@ -13,3 +15,4 @@
 [submodule "Submodules/sundials"]
 	path = Submodules/sundials
 	url = https://github.com/LLNL/sundials.git
+        depth = 1
