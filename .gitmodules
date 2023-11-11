@@ -1,20 +1,21 @@
 [submodule "Submodules/AMReX"]
 	path = Submodules/AMReX
 	url = https://github.com/AMReX-Codes/amrex.git
-        shallow = true
+        filter = blob:none
 [submodule "Submodules/PelePhysics/Submodules/sundials"]
         update = none
 [submodule "Submodules/PelePhysics"]
 	path = Submodules/PelePhysics
 	url = https://github.com/AMReX-Combustion/PelePhysics.git
-        shallow = true
+        filter = blob:none
 [submodule "Submodules/PeleMP"]
 	path = Submodules/PeleMP
 	url = https://github.com/AMReX-Combustion/PeleMP.git
+        filter = blob:none
 [submodule "Submodules/GoogleTest"]
 	path = Submodules/GoogleTest
 	url = https://github.com/google/googletest.git
 [submodule "Submodules/sundials"]
 	path = Submodules/sundials
 	url = https://github.com/LLNL/sundials.git
-        shallow = true
+        filter = blob:none
