@@ -217,14 +217,13 @@ jobs:
           echo "CCACHE_LOGFILE=${{github.workspace}}/ccache.log.txt" >> $GITHUB_ENV
           echo "CCACHE_MAXSIZE=${{matrix.ccache_size}}" >> $GITHUB_ENV
           cmake -E make_directory ${{runner.workspace}}/deps
-          if [ "${RUNNER_OS}" != "macOS" ]; then
-            ${{github.workspace}}/Submodules/PelePhysics/Submodules/amrex/.github/workflows/dependencies/ubuntu_free_disk_space.sh
-          fi
+          #if [ "${RUNNER_OS}" != "macOS" ]; then
+          #  ${{github.workspace}}/Submodules/PelePhysics/Submodules/amrex/.github/workflows/dependencies/ubuntu_free_disk_space.sh
+          #fi
       - name: Dependencies
         run: |
           # Install MPI
           ${{matrix.install_deps}}
-          libtool -V
           # Install Python packages
           python -m pip install --upgrade pip
           pip install pynose numpy pandas setuptools
@@ -250,7 +249,6 @@ jobs:
           cd ${{runner.workspace}}/deps/MetaPhysicL
           automake --version
           autoconf -V
-          libtool -V
           ./bootstrap
           ./configure --prefix="${{runner.workspace}}/deps/install/MetaPhysicL"
           make -j ${{env.NPROCS}}
