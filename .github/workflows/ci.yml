@@ -223,6 +223,7 @@ jobs:
       - name: Dependencies
         run: |
           # Install MPI
+          libtool -V
           ${{matrix.install_deps}}
           libtool -V
           # Install Python packages
