@@ -187,7 +187,7 @@ jobs:
             procs: $(sysctl -n hw.ncpu)
             ccache_cache: /Users/runner/Library/Caches/ccache
           - os: ubuntu-latest
-            install_deps: sudo apt-get update && sudo apt-get install mpich libmpich-dev
+            install_deps: sudo apt-get update && sudo apt-get install mpich libmpich-dev libtool
             comp: gnu
             procs: $(nproc)
             ccache_cache: ~/.cache/ccache
