@@ -187,7 +187,7 @@ jobs:
             procs: $(sysctl -n hw.ncpu)
             ccache_cache: /Users/runner/Library/Caches/ccache
           - os: ubuntu-latest
-            install_deps: sudo apt-get update && sudo apt-get install mpich libmpich-dev libtool
+            install_deps: sudo apt-get update && sudo apt-get install mpich libmpich-dev libtool-bin
             comp: gnu
             procs: $(nproc)
             ccache_cache: ~/.cache/ccache
@@ -223,7 +223,6 @@ jobs:
       - name: Dependencies
         run: |
           # Install MPI
-          libtool -V
           ${{matrix.install_deps}}
           libtool -V
           # Install Python packages
