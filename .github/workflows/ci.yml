@@ -402,7 +402,7 @@ jobs:
     name: GPU-HIP
     # AMReX uses std::clamp in EB and it breaks newer ROCm or ubuntu releases due to
     # error: reference to __host__ function '__glibcxx_assert_fail' in __host__ __device__ function
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Clone
         uses: actions/checkout@v4
