@@ -400,7 +400,6 @@ jobs:
           du -hs ~/.cache/ccache
   GPU-AMD:
     name: GPU-HIP
-    needs: [Formatting, CPU-GNUmake]
     # AMReX uses std::clamp in EB and it breaks newer ROCm or ubuntu releases due to
     # error: reference to __host__ function '__glibcxx_assert_fail' in __host__ __device__ function
     runs-on: ubuntu-22.04
@@ -418,7 +417,6 @@ jobs:
           echo "CCACHE_MAXSIZE=100M" >> $GITHUB_ENV
       - name: Dependencies
         run: |
-          ${{github.workspace}}/Submodules/PelePhysics/Submodules/amrex/.github/workflows/dependencies/ubuntu_free_disk_space.sh
           sudo mkdir --parents --mode=0755 /etc/apt/keyrings
           wget https://repo.radeon.com/rocm/rocm.gpg.key -O - | gpg --dearmor | sudo tee /etc/apt/keyrings/rocm.gpg > /dev/null
           echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/rocm.gpg] https://repo.radeon.com/rocm/apt/6.2.1 jammy main" | sudo tee --append /etc/apt/sources.list.d/rocm.list
