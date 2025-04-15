@@ -232,7 +232,7 @@ jobs:
       DO_REF_COMPARE: ${{matrix.reference_comparison == 'ON' && github.event_name != 'push'}}
     steps:
       - name: Test
-        if: ${{DO_REF_COMPARE}}
+        if: ${{env.DO_REF_COMPARE}}
         run: |
           echo DOGS
       - name: Clone
