@@ -228,7 +228,13 @@ jobs:
         exclude:
           - os: macos-latest
             build_type: Debug
+    env:
+      DO_REF_COMPARE: ${{matrix.reference_comparison == 'ON' && github.event_name != 'push'}}
     steps:
+      - name: Test
+        if: ${{DO_REF_COMPARE}}
+        run: |
+          echo DOGS
       - name: Clone
         uses: actions/checkout@v4
         with:
