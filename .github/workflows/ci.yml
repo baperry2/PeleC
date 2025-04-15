@@ -229,6 +229,13 @@ jobs:
           - os: macos-latest
             build_type: Debug
     steps:
+      - name: Echo
+        if: ${{matrix.reference_comparison == ON}}
+        run: |
+          echo DOGS
+      - name: Echo 2
+        run: |
+          echo CATS
       - name: Clone
         uses: actions/checkout@v4
         with:
