@@ -230,7 +230,7 @@ jobs:
             build_type: Debug
     steps:
       - name: Echo
-        if: matrix.reference_comparison == "ON"
+        if: matrix.reference_comparison == 'ON'
         run: |
           echo DOGS
       - name: Echo 2
