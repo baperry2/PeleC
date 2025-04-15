@@ -230,8 +230,8 @@ jobs:
             build_type: Debug
     env:
       DO_REF1: ${{matrix.reference_comparison == 'ON'}}
-      DO_REF2: ${{github.event_name != 'push'}}
-      DO_REF_COMPARE: ${{matrix.reference_comparison == 'ON' && github.event_name != 'push'}}
+      DO_REF2: ${{github.event_name != 'worfklow_dispatch'}}
+      DO_REF_COMPARE: ${{matrix.reference_comparison == 'ON' && github.event_name != 'workflow_dispatch'}}
     steps:
       - name: test 0
         run: |
