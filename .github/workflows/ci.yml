@@ -229,9 +229,16 @@ jobs:
           - os: macos-latest
             build_type: Debug
     env:
+      DO_REF1 = ${{matrix.reference_comparison == 'ON'}}
+      DO_REF2 = ${{github.event_name != 'push'}}
       DO_REF_COMPARE: ${{matrix.reference_comparison == 'ON' && github.event_name != 'push'}}
     steps:
-      - name: Test
+      - name: test 0
+        run: |
+          echo ${{env.DO_REF_COMPARE}}
+          echo ${{DO_REF1}}
+          echo ${{DO_REF2}}
+- name: Test
         if: ${{env.DO_REF_COMPARE == 1}}
         run: |
           echo DOGS
