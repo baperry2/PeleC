@@ -239,7 +239,7 @@ jobs:
           echo ${{env.DO_REF1}}
           echo ${{env.DO_REF2}}
       - name: Test
-        if: ${{env.DO_REF_COMPARE == true}}
+        if: env.DO_REF_COMPARE == 'true'
         run: |
           echo DOGS
       - name: Clone
